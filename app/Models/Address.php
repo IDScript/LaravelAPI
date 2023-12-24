@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Address extends Model {
     protected $table = "addresses";
@@ -10,4 +11,8 @@ class Address extends Model {
     protected $keyType = "int";
     protected $timestamp = true;
     protected $incrementing = true;
+
+    public function contact(): BelongsTo {
+        return $this->belongsTo(Contact::class, "user_id", "id");
+    }
 }

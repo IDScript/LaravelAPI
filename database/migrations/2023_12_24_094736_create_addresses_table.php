@@ -16,7 +16,10 @@ return new class extends Migration {
             $table->string('province', 100)->nullable(true);
             $table->string('country', 100)->nullable(false);
             $table->string('postal_code', 10)->nullable(true);
+            $table->unsignedBigInteger('contact_id')->nullable(false);
             $table->timestamps();
+
+            $table->foreign('contact_id')->on('contacts')->references('id');
         });
     }
 
