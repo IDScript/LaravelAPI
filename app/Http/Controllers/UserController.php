@@ -11,14 +11,15 @@ use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\UserLoginRequest;
 use App\Http\Requests\UserRegisterRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller {
     /**
      * Display a listing of the resource.
      */
-    public function index() {
-        //
-    }
+    // public function index() {
+    //
+    // }
 
     /**
      * Store a newly created resource in storage.
@@ -43,6 +44,14 @@ class UserController extends Controller {
     /**
      * Display the specified resource.
      */
+    public function get(Request $request): UserResource {
+        $user = Auth::user();
+        return new UserResource($user);
+    }
+
+    /**
+     * Login function
+     */
     public function login(UserLoginRequest $request): UserResource {
         $data = $request->validated();
 
@@ -66,14 +75,14 @@ class UserController extends Controller {
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id) {
-        //
-    }
+    // public function update(Request $request, string $id) {
+    //
+    // }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id) {
-        //
-    }
+    // public function destroy(string $id) {
+    //
+    // }
 }
