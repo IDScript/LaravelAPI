@@ -10,7 +10,13 @@ class User extends Model {
     protected $primaryKey = "id";
     protected $keyType = "int";
     protected $timestamp = true;
-    protected $incrementing = true;
+    public $incrementing = true;
+
+    protected $fillable = [
+        'name',
+        'username',
+        'password'
+    ];
 
     public function contact(): HasMany {
         return $this->hasMany(Contact::class, 'user_id', 'id');
