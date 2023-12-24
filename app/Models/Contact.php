@@ -13,7 +13,7 @@ class Contact extends Model {
     protected $timestamp = true;
     protected $incrementing = true;
 
-    public function User(): BelongsTo {
+    public function user(): BelongsTo {
         return $this->belongsTo(Contact::class, "user_id", "id");
     }
 

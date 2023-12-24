@@ -12,7 +12,7 @@ class User extends Model {
     protected $timestamp = true;
     protected $incrementing = true;
 
-    public function contactd(): HasMany {
+    public function contact(): HasMany {
         return $this->hasMany(Contact::class, 'user_id', 'id');
     }
 }
