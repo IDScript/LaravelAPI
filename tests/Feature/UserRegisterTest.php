@@ -2,7 +2,7 @@
 
 test('Register success', function () {
     $response = $this->post(
-        '/api/users',
+        '/api/register',
         [
             'username' => 'testDaftar',
             'name' => 'Nama Test Daftar',
@@ -20,7 +20,7 @@ test('Register success', function () {
 });
 
 test('Register BadRequest', function () {
-    $response = $this->post('/api/users');
+    $response = $this->post('/api/register');
 
     $response->assertJson([
         "errors" => [
@@ -40,7 +40,7 @@ test('Register BadRequest', function () {
 
 test('Register blank name', function () {
     $response = $this->post(
-        '/api/users',
+        '/api/register',
         [
             'username' => 'testDaftar',
             'password' => 'rahasiaya',
@@ -59,7 +59,7 @@ test('Register blank name', function () {
 
 test('Register blank username', function () {
     $response = $this->post(
-        '/api/users',
+        '/api/register',
         [
             'name' => 'Nama Test Daftar',
             'password' => 'rahasiaya',
@@ -78,7 +78,7 @@ test('Register blank username', function () {
 
 test('Register blank password', function () {
     $response = $this->post(
-        '/api/users',
+        '/api/register',
         [
             'username' => 'testDaftar',
             'name' => 'Nama Test Daftar',
@@ -97,7 +97,7 @@ test('Register blank password', function () {
 
 test('Register password not enough', function () {
     $response = $this->post(
-        '/api/users',
+        '/api/register',
         [
             'username' => 'testDaftar',
             'name' => 'Nama Test Daftar',
@@ -117,7 +117,7 @@ test('Register password not enough', function () {
 
 test('Register Username Already Registered', function () {
     $response = $this->post(
-        '/api/users',
+        '/api/register',
         [
             'username' => 'testDaftar',
             'name' => 'Nama Test Daftar',
@@ -135,7 +135,7 @@ test('Register Username Already Registered', function () {
     $response->assertStatus(201);
 
     $response = $this->post(
-        '/api/users',
+        '/api/register',
         [
             'username' => 'testDaftar',
             'name' => 'Nama Test Daftar',

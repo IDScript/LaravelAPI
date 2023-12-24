@@ -18,4 +18,5 @@ use App\Http\Controllers\UserController;
 //     return $request->user();
 // });
 
-Route::post('users/', [UserController::class, 'register']);
+Route::post('register', [UserController::class, 'register']);
+Route::post('login', [UserController::class, 'login']);
