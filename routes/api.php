@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\APIAuthMiddleware;
+use App\Http\Controllers\ContactController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,11 +20,12 @@ use App\Http\Middleware\APIAuthMiddleware;
 //     return $request->user();
 // });
 
-Route::post('register', [UserController::class, 'register']);
-Route::post('login', [UserController::class, 'login']);
+Route::post('/register', [UserController::class, 'register']);
+Route::post('/login', [UserController::class, 'login']);
 
 Route::middleware(APIAuthMiddleware::class)->group(function () {
-    Route::get('user/current', [UserController::class, 'get']);
-    Route::patch('user', [UserController::class, 'update']);
-    Route::delete('logout', [UserController::class, 'logout']);
+    Route::get('/user/current', [UserController::class, 'get']);
+    Route::patch('/user', [UserController::class, 'update']);
+    Route::delete('/logout', [UserController::class, 'logout']);
+    Route::post('/contact', [ContactController::class, 'store']);
 });

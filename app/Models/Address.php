@@ -9,7 +9,7 @@ class Address extends Model {
     protected $table = "addresses";
     protected $primaryKey = "id";
     protected $keyType = "int";
-    protected $timestamp = true;
+    public $timestamp = true;
     public $incrementing = true;
 
     public function contact(): BelongsTo {
