@@ -7,11 +7,12 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\Http\Resources\UserResource;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\UserLoginRequest;
 use App\Http\Requests\UserRegisterRequest;
+use App\Http\Requests\UserUpdateRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
-use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller {
     /**
@@ -75,9 +76,21 @@ class UserController extends Controller {
     /**
      * Update the specified resource in storage.
      */
-    // public function update(Request $request, string $id) {
-    //
-    // }
+    public function update(UserUpdateRequest $request): UserResource {
+        $data = $request->validated();
+
+        $user = Auth::user();
+
+        if (isset($data['name'])) {
+            $user->name = $data['name'];
+        }
+        if (isset($data['password'])) {
+            $user->password = Hash::make($data['password']);
+        }
+
+        $user->save();
+        return new UserResource($user);
+    }
 
     /**
      * Remove the specified resource from storage.
