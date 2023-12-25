@@ -10,7 +10,7 @@ class Address extends Model {
     protected $primaryKey = "id";
     protected $keyType = "int";
     protected $timestamp = true;
-    protected $incrementing = true;
+    public $incrementing = true;
 
     public function contact(): BelongsTo {
         return $this->belongsTo(Contact::class, "user_id", "id");
