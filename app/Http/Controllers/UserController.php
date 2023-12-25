@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Http\JsonResponse;
 use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Auth;
@@ -79,6 +80,7 @@ class UserController extends Controller {
     public function update(UserUpdateRequest $request): UserResource {
         $data = $request->validated();
 
+        /** @var \App\Models\User $user **/
         $user = Auth::user();
 
         if (isset($data['name'])) {
@@ -95,7 +97,12 @@ class UserController extends Controller {
     /**
      * Remove the specified resource from storage.
      */
-    // public function destroy(string $id) {
-    //
-    // }
+    public function logout(Request $request): Response {
+        /** @var \App\Models\User $user **/
+        $user = Auth::user();
+        $user->token = null;
+        $user->save();
+
+        return response(null, 204);
+    }
 }
