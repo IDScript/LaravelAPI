@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ContactAddRequest;
-use App\Http\Resources\ContactResource;
 use App\Models\Contact;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Resources\ContactResource;
+use App\Http\Requests\ContactAddRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class ContactController extends Controller {
     /**
@@ -33,8 +34,20 @@ class ContactController extends Controller {
     /**
      * Display the specified resource.
      */
-    public function show(Contact $contact) {
-        //
+    public function show(int $id): ContactResource {
+        $user = Auth::user();
+        $contact = Contact::where('id', $id)->where('user_id', $user->id)->first();
+        if (!$contact) {
+            throw new HttpResponseException(response()->json([
+                "errors" => [
+                    "message" => [
+                        "Id:" . $id . " Not Found"
+                    ]
+                ]
+            ])->setStatusCode(404));
+        }
+
+        return new ContactResource($contact);
     }
 
     /**
