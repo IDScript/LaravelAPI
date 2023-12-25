@@ -15,8 +15,9 @@ class ContactController extends Controller {
     /**
      * Display a listing of the resource.
      */
-    public function index() {
-        //
+    public function index(): JsonResponse {
+        $contact = Contact::where('user_id', Auth::user()->id)->get();
+        return response()->json($contact);
     }
 
     /**
