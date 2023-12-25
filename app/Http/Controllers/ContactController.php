@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Contact;
-use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\ContactResource;
@@ -78,7 +78,20 @@ class ContactController extends Controller {
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Contact $contact) {
-        //
+    public function destroy(int $id): Response {
+        $user = Auth::user();
+        $contact = Contact::where('id', $id)->where('user_id', $user->id)->first();
+        if (!$contact) {
+            throw new HttpResponseException(response()->json([
+                "errors" => [
+                    "message" => [
+                        "Id:" . $id . " Not Found"
+                    ]
+                ]
+            ])->setStatusCode(404));
+        }
+
+        $contact->delete();
+        return response(null, 204);
     }
 }
