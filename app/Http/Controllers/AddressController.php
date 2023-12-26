@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Address;
 use App\Models\Contact;
+use Illuminate\Http\Response;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\AddressResource;
@@ -84,7 +85,11 @@ class AddressController extends Controller {
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Address $address) {
-        //
+    public function destroy(int $idContact, int $idAddress): Response {
+        $user = Auth::user();
+        $contact = $this->getContact($user, $idContact);
+        $address = $this->getAddress($contact, $idAddress);
+        $address->delete();
+        return response(null, 204);
     }
 }
