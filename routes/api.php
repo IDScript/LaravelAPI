@@ -29,11 +29,14 @@ Route::middleware(APIAuthMiddleware::class)->group(function () {
     Route::patch('/user', [UserController::class, 'update']);
     Route::delete('/logout', [UserController::class, 'logout']);
     // contact
-    Route::post('/contact', [ContactController::class, 'store']);
+    Route::post('/contacts', [ContactController::class, 'store']);
     Route::get('/contacts', [ContactController::class, 'search']);
-    Route::get('/contact/{id}', [ContactController::class, 'show'])->where('id', '[0-9]+');
-    Route::put('/contact/{id}', [ContactController::class, 'update'])->where('id', '[0-9]+');
-    Route::delete('/contact/{id}', [ContactController::class, 'destroy'])->where('id', '[0-9]+');
+    Route::get('/contacts/{id}', [ContactController::class, 'show'])
+        ->where('id', '[0-9]+');
+    Route::put('/contacts/{id}', [ContactController::class, 'update'])
+        ->where('id', '[0-9]+');
+    Route::delete('/contacts/{id}', [ContactController::class, 'destroy'])
+        ->where('id', '[0-9]+');
     // address
     Route::post('/contact/{idContact}/addresses', [AddressController::class, 'store'])->where('idContact', '[0-9]+');
     Route::get('/contacts/{idContact}/addresses/{idAddress}', [AddressController::class, 'show'])

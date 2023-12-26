@@ -9,7 +9,7 @@ use function PHPUnit\Framework\assertEquals;
 test('Contact Delete success', function () {
     $this->seed([UserSeeder::class, ContactSeeder::class]);
     $oldContact = Contact::first();
-    $response = $this->delete('/api/contact/' . $oldContact->id, [], ['Authorization' => 'testToken']);
+    $response = $this->delete('/api/contacts/' . $oldContact->id, [], ['Authorization' => 'testToken']);
     $response->assertStatus(204);
     $newContact = Contact::where('id', $oldContact->id)->first();
     assertNull($newContact);
@@ -18,7 +18,7 @@ test('Contact Delete success', function () {
 test('Contact Delete Other User', function () {
     $this->seed([UserSeeder::class, ContactSeeder::class]);
     $oldContact = Contact::first();
-    $response = $this->delete('/api/contact/' . $oldContact->id, [], ['Authorization' => 'testToken2']);
+    $response = $this->delete('/api/contacts/' . $oldContact->id, [], ['Authorization' => 'testToken2']);
     $response->assertJson([
         "errors" => [
             "message" => [
@@ -34,7 +34,7 @@ test('Contact Delete Other User', function () {
 test('Contact Delete Not Found', function () {
     $this->seed([UserSeeder::class, ContactSeeder::class]);
     $oldContact = Contact::first();
-    $response = $this->delete('/api/contact/' . $oldContact->id + 1, [], ['Authorization' => 'testToken2']);
+    $response = $this->delete('/api/contacts/' . $oldContact->id + 1, [], ['Authorization' => 'testToken2']);
     $response->assertJson([
         "errors" => [
             "message" => [

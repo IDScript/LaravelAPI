@@ -11,7 +11,7 @@ test('Contact Add success', function () {
     ];
 
     $this->seed([UserSeeder::class]);
-    $response = $this->post('/api/contact', $data, ['Authorization' => 'testToken']);
+    $response = $this->post('/api/contacts', $data, ['Authorization' => 'testToken']);
     $response->assertJson(["data" => $data]);
 
     $response->assertStatus(201);
@@ -25,7 +25,7 @@ test('Contact Add Fail', function () {
     ];
 
     $this->seed([UserSeeder::class]);
-    $response = $this->post('/api/contact', $data, ['Authorization' => 'testToken']);
+    $response = $this->post('/api/contacts', $data, ['Authorization' => 'testToken']);
     $response->assertJson([
         "errors" => [
             "first_name" => ["The first name field is required."],
@@ -46,7 +46,7 @@ test('Contact Add Unautorized', function () {
     ];
 
     $this->seed([UserSeeder::class]);
-    $response = $this->post('/api/contact', $data, ['Authorization' => 'test Token']);
+    $response = $this->post('/api/contacts', $data, ['Authorization' => 'test Token']);
     $response->assertJson(["errors" => ["message" => "Unautorized"]]);
 
     $response->assertStatus(401);

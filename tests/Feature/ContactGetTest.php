@@ -15,7 +15,7 @@ test('Contact Get success', function () {
     $this->seed([UserSeeder::class, ContactSeeder::class]);
 
     $contact = Contact::first();
-    $response = $this->get('/api/contact/' . $contact->id, ['Authorization' => 'testToken']);
+    $response = $this->get('/api/contacts/' . $contact->id, ['Authorization' => 'testToken']);
     $response->assertJson(["data" => $data]);
 
     $response->assertStatus(200);
@@ -24,7 +24,7 @@ test('Contact Get success', function () {
 test('Contact Get Not Found', function () {
     $this->seed([UserSeeder::class, ContactSeeder::class]);
     $contact = Contact::first();
-    $response = $this->get('/api/contact/' . $contact->id + 1, ['Authorization' => 'testToken']);
+    $response = $this->get('/api/contacts/' . $contact->id + 1, ['Authorization' => 'testToken']);
     $response->assertJson([
         "errors" => [
             "message" => [
@@ -39,7 +39,7 @@ test('Contact Get Not Found', function () {
 test('Contact Get Other User Contact', function () {
     $this->seed([UserSeeder::class, ContactSeeder::class]);
     $contact = Contact::first();
-    $response = $this->get('/api/contact/' . $contact->id + 1, ['Authorization' => 'testToken2']);
+    $response = $this->get('/api/contacts/' . $contact->id + 1, ['Authorization' => 'testToken2']);
     $response->assertJson([
         "errors" => [
             "message" => [

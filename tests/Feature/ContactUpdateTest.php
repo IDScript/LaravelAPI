@@ -15,7 +15,7 @@ test('Contact Update success', function () {
     $this->seed([UserSeeder::class, ContactSeeder::class]);
 
     $contact = Contact::first();
-    $response = $this->put('/api/contact/' . $contact->id, $data, ['Authorization' => 'testToken']);
+    $response = $this->put('/api/contacts/' . $contact->id, $data, ['Authorization' => 'testToken']);
     $response->assertJson(["data" => $data]);
 
     $response->assertStatus(200);
@@ -31,7 +31,7 @@ test('Contact Update Fail', function () {
     $this->seed([UserSeeder::class, ContactSeeder::class]);
 
     $contact = Contact::first();
-    $response = $this->put('/api/contact/' . $contact->id, $data, ['Authorization' => 'testToken']);
+    $response = $this->put('/api/contacts/' . $contact->id, $data, ['Authorization' => 'testToken']);
     $response->assertJson([
         "errors" => [
             "first_name" => ["The first name field is required."],
@@ -54,7 +54,7 @@ test('Contact Update Not Found', function () {
     $this->seed([UserSeeder::class, ContactSeeder::class]);
 
     $contact = Contact::first();
-    $response = $this->put('/api/contact/' . $contact->id, $data, ['Authorization' => 'testToken2']);
+    $response = $this->put('/api/contacts/' . $contact->id, $data, ['Authorization' => 'testToken2']);
     $response->assertJson([
         "errors" => [
             "message" => [
