@@ -15,7 +15,7 @@ test('Address Add success', function () {
 
     $this->seed([UserSeeder::class, ContactSeeder::class]);
     $contact = Contact::limit(1)->first();
-    $response = $this->post('/api/contact/' . $contact->id . '/addresses', $data, ['Authorization' => 'testToken']);
+    $response = $this->post('/api/contacts/' . $contact->id . '/addresses', $data, ['Authorization' => 'testToken']);
     $response->assertJson(["data" => $data]);
 
     $response->assertStatus(201);
@@ -31,7 +31,7 @@ test('Address Add Fail', function () {
 
     $this->seed([UserSeeder::class, ContactSeeder::class]);
     $contact = Contact::limit(1)->first();
-    $response = $this->post('/api/contact/' . $contact->id . '/addresses', $data, ['Authorization' => 'testToken']);
+    $response = $this->post('/api/contacts/' . $contact->id . '/addresses', $data, ['Authorization' => 'testToken']);
     $response->assertJson([
         "errors" => [
             "country" => ["The country field is required."]
@@ -52,7 +52,7 @@ test('Address Add Not Found', function () {
 
     $this->seed([UserSeeder::class, ContactSeeder::class]);
     $contact = Contact::limit(1)->first();
-    $response = $this->post('/api/contact/' . $contact->id + 1 . '/addresses', $data, ['Authorization' => 'testToken']);
+    $response = $this->post('/api/contacts/' . $contact->id + 1 . '/addresses', $data, ['Authorization' => 'testToken']);
     $response->assertJson([
         "errors" => [
             "message" => [

@@ -5,7 +5,7 @@ use Database\Seeders\UserSeeder;
 use Database\Seeders\AddressSeeder;
 use Database\Seeders\ContactSeeder;
 
-test('Contact List success', function () {
+test('Address List success', function () {
     $data =  [
         'street' => 'SCBD test test',
         'city' => 'Jakarta Pusat test',
