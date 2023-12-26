@@ -1,8 +1,8 @@
 <?php
 
 use App\Models\Contact;
-use Database\Seeders\ContactSeeder;
 use Database\Seeders\UserSeeder;
+use Database\Seeders\ContactSeeder;
 
 test('Address Add success', function () {
     $data =  [

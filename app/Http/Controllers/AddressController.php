@@ -47,8 +47,31 @@ class AddressController extends Controller {
     /**
      * Display the specified resource.
      */
-    public function show(Address $address) {
-        //
+    public function show(int $idContact, int $idAddress): AddressResource {
+        $user = Auth::user();
+        $contact = Contact::where('id', $idContact)->where('user_id', $user->id)->first();
+        if (!$contact) {
+            throw new HttpResponseException(response()->json([
+                "errors" => [
+                    "message" => [
+                        "Id:" . $idContact . " Not Found"
+                    ]
+                ]
+            ])->setStatusCode(404));
+        }
+
+        $address = Address::where('id', $idAddress)->where('contact_id', $contact->id)->first();
+        if (!$address) {
+            throw new HttpResponseException(response()->json([
+                "errors" => [
+                    "message" => [
+                        "Id:" . $idAddress . " Not Found"
+                    ]
+                ]
+            ])->setStatusCode(404));
+        }
+
+        return (new AddressResource($address));
     }
 
     /**
