@@ -44,6 +44,15 @@ class AddressController extends Controller {
         return $address;
     }
 
+    public function list(int $idContact): JsonResponse {
+        $user = Auth::user();
+        $contact = $this->getContact($user, $idContact);
+
+        $addresses = Address::where('contact_id', $contact->id)->get();
+
+        return (AddressResource::collection($addresses))->response()->setStatusCode(200);
+    }
+
     /**
      * Store a newly created resource in storage.
      */
