@@ -10,7 +10,7 @@ class User extends Model implements Authenticatable {
     protected $table = "users";
     protected $primaryKey = "id";
     protected $keyType = "int";
-    protected $timestamp = true;
+    public $timestamp = true;
     public $incrementing = true;
 
     protected $fillable = [

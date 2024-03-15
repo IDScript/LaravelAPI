@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\APIAuthMiddleware;
+use App\Http\Controllers\AddressController;
+use App\Http\Controllers\ContactController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,11 +21,34 @@ use App\Http\Middleware\APIAuthMiddleware;
 //     return $request->user();
 // });
 
-Route::post('register', [UserController::class, 'register']);
-Route::post('login', [UserController::class, 'login']);
+Route::post('/register', [UserController::class, 'register']);
+Route::post('/login', [UserController::class, 'login']);
 
 Route::middleware(APIAuthMiddleware::class)->group(function () {
-    Route::get('user/current', [UserController::class, 'get']);
-    Route::patch('user', [UserController::class, 'update']);
-    Route::delete('logout', [UserController::class, 'logout']);
+    Route::get('/user/current', [UserController::class, 'get']);
+    Route::patch('/user', [UserController::class, 'update']);
+    Route::delete('/logout', [UserController::class, 'logout']);
+    // contact
+    Route::post('/contacts', [ContactController::class, 'store']);
+    Route::get('/contacts', [ContactController::class, 'search']);
+    Route::get('/contacts/{id}', [ContactController::class, 'show'])
+        ->where('id', '[0-9]+');
+    Route::put('/contacts/{id}', [ContactController::class, 'update'])
+        ->where('id', '[0-9]+');
+    Route::delete('/contacts/{id}', [ContactController::class, 'destroy'])
+        ->where('id', '[0-9]+');
+    // address
+    Route::get('/contacts/{idContact}/addresses', [AddressController::class, 'list'])
+        ->where('idContact', '[0-9]+');
+    Route::post('/contacts/{idContact}/addresses', [AddressController::class, 'store'])
+        ->where('idContact', '[0-9]+');
+    Route::get('/contacts/{idContact}/addresses/{idAddress}', [AddressController::class, 'show'])
+        ->where('idContact', '[0-9]+')
+        ->where('idAddress', '[0-9]+');
+    Route::put('/contacts/{idContact}/addresses/{idAddress}', [AddressController::class, 'update'])
+        ->where('idContact', '[0-9]+')
+        ->where('idAddress', '[0-9]+');
+    Route::delete('/contacts/{idContact}/addresses/{idAddress}', [AddressController::class, 'destroy'])
+        ->where('idContact', '[0-9]+')
+        ->where('idAddress', '[0-9]+');
 });

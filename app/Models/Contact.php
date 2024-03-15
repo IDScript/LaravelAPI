@@ -10,8 +10,10 @@ class Contact extends Model {
     protected $table = "contacts";
     protected $primaryKey = "id";
     protected $keyType = "int";
-    protected $timestamp = true;
+    public $timestamp = true;
     public $incrementing = true;
+
+    protected $fillable = ['first_name', 'last_name', 'email', 'phone'];
 
     public function user(): BelongsTo {
         return $this->belongsTo(Contact::class, "user_id", "id");
